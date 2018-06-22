@@ -1,12 +1,15 @@
 # TareaPrograma2-IE0521
 
-Universidad de Costa Rica \n
-Escuela de Ingeniería Eléctrica \n
-IE 0521 - Estructuras de Computadoras Digitales II \n
+Universidad de Costa Rica 
 
-Profesora: Loriana Sanabrio S. \n
+Escuela de Ingeniería Eléctrica 
 
-Estudiantes: Paula Hernández G. - B53375 \n
+IE 0521 - Estructuras de Computadoras Digitales II 
+
+Profesora: Loriana Sanabrio S. 
+
+Estudiantes: Paula Hernández G. - B53375 
+
              Yasser Wagon M.    - B47732              
 
 
