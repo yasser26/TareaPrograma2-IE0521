@@ -8,8 +8,10 @@ IE 0521 - Estructuras de Computadoras Digitales II
 
 Profesora: Loriana Sanabrio S. 
 
-Estudiantes: Paula Hernández G. - B53375 
+Estudiantes: 
 
-             Yasser Wagon M.    - B47732              
+Paula Hernández G. - B53375 
+
+Yasser Wagon M.    - B47732              
 
 
