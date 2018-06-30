@@ -16,7 +16,7 @@ int distLocations [8][8] = {{0, 115, 8, 17, 167, 26, 83, 75},
 
 int bestDist=9999999, size=8;
 
-void checkShortestDistance(int city, int visited_in[], int path_in[], int path_i_in, int dist_in);
+void checkShortestDistance(int location, int visited_in[], int path_in[], int path_i_in, int dist_in);
 
 
 // La funcion checkShortestDistance() determina de forma recursiva, el camino mas
