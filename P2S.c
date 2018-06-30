@@ -1,14 +1,11 @@
-/*0 1 2 10
-1 0 3 5
-2 3 0 6
-10 5 6 0 */
+
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
-int m_row=8, m_column=8, visited[8], best_path[8];
-///////////////////////// Table of locations and distances /////////////////////////
+// Definicion de variables usadas durante la ejecución del programa
+int m_row=8, m_column=8, visited[8], bestPath[8];
 char Locations [8][14] = {"San Jose", "Limon   ", "San Francisco", "Alajuela", "Liberia   ", "Paraiso   ", "Puntarenas", "San Isidro"};
 int distLocations [8][8] = {{0, 115, 8, 17, 167, 26, 83, 75},
                               {115, 0, 120, 129, 272, 92, 197, 100},
@@ -20,44 +17,54 @@ int distLocations [8][8] = {{0, 115, 8, 17, 167, 26, 83, 75},
                               {75, 100, 83, 91, 236, 55, 141, 0}};
 
 
-int best_cost=9999999, size=8;
+int bestDist=9999999, size=8;
 
-void checkShortestDistance(int city, int visited_in[], int path_in[], int path_i_in, int cost_in);
+void checkShortestDistance(int location, int visited_in[], int path_in[], int path_i_in, int dist_in);
 
-void checkShortestDistance(int city, int visited_in[], int path_in[], int path_i_in, int cost_in) {
-  if (cost_in < best_cost) {
+// La funcion checkShortestDistance() determina de forma recursiva, el camino mas
+// corte partiendo de una cuidad, a las otras cuidades.
+void checkShortestDistance(int location, int visited_in[], int path_in[], int path_i_in, int dist_in) {
+  // condición se cumple si se está ante una distancia menor a la mejor distancia guardada
+  if (dist_in < bestDist) {
     int *visited=calloc(sizeof(int),size+1);
     int *path=calloc(sizeof(int),size+1);
     int path_i=path_i_in;
-    int cost=cost_in;
+    int dist=dist_in;
     int i;
 
+    // Se actualizan la lista de cuidades ya visitadas (visited[]) y
+    // la ruta más corta hasta el momento (path[])
     for (i=0; i<size; i++) {
       visited[i]=visited_in[i];
       path[i]=path_in[i];
     }
 
-    visited[city]=1;
-    path[path_i]=city;
+    // Se marca la nueva mejor ruta como visitada y se agrega al path
+    visited[location]=1;
+    path[path_i]=location;
     path_i++;
 
-    int leaf=0;
+    // Variable de parada de la recursividad
+    int varia=0;
+    // Se aplica la recursividad para cada cuidad
     for(i=0; i<size; i++) {
       if(visited[i]==0) {
-        leaf++;
-        checkShortestDistance(i, visited, path, path_i, cost+distLocations[city][i]);
+        varia++;
+        checkShortestDistance(i, visited, path, path_i, dist+distLocations[location][i]);
       }
     }
 
-    if (leaf == 0) {
-      cost+=distLocations[city][0];
+    // Condición de parada que índica la llegada a la cuidad de inicial de partida
+    // se actualizan las varibles bestPath[], bestDist
+    if (varia == 0) {
+      dist+=distLocations[location][0];
       path[path_i]=0;
       path_i++;
 
-      if(cost < best_cost) {
-        best_cost=cost;
+      if(dist < bestDist) {
+        bestDist=dist;
         for(i=0; i<size; i++)
-        best_path[i]=path[i];
+        bestPath[i]=path[i];
       }
     }
 
@@ -66,59 +73,12 @@ void checkShortestDistance(int city, int visited_in[], int path_in[], int path_i
   }
 }
 
-/*int least(int c);
-void mincost(int city);
 
 
-int least(int c)
-{
-    int i,nc=999;
-    int min=999,kmin;
-
-    for(i=0;i < n;i++)
-    {
-        if((distLocations[c][i]!=0)&&(completed[i]==0))
-            if(distLocations[c][i]+distLocations[i][c] < min)
-            {
-                min=distLocations[i][0]+distLocations[c][i];
-                kmin=distLocations[c][i];
-                nc=i;
-            }
-    }
-
-    if(min!=999)
-        cost+=kmin;
-
-    return nc;
-}
-
-void mincost(int city)
-{
-    int i,ncity;
-
-    completed[city]=1;
-
-    printf("%d--->",city+1);
-    ncity=least(city);
-
-    if(ncity==999)
-    {
-        ncity=0;
-        printf("%d",ncity+1);
-        cost+=distLocations[city][ncity];
-
-        return;
-    }
-
-    mincost(ncity);
-} */
-
-
-
-
+// Función principal main()
 int main(int argc, char *argv[]) {
 
-///////////////////////// Print the table /////////////////////////
+// Se imprime la tabla de distancias
   printf("\t\t");
   for (int i = 0; i < 8; i++) {
     printf("%s\t", Locations[i] );
@@ -133,128 +93,25 @@ int main(int argc, char *argv[]) {
     printf("\n");
   }
 
-///////////////////////// Determinates de shortest distance /////////////////////////
-/*  printf("\n\nPath:\t");
-  printf("\n\nThe Path is:\n");
-  mincost(0); //passing 0 because starting vertex
-  printf("\n\nMinimum cost is %d\n ",cost); */
+// Se determina la ruta más corta, entre las 8 cuidades
   for (int i = 0; i < 8; i++) {
+    int *visited = calloc(sizeof(int),size+1);
+    int *path = calloc(sizeof(int),size+1);
+    int dist = distLocations[0][i], path_i=1;
+    path[0] = 0;
+    visited[0] = 1;
 
+    checkShortestDistance(i, visited, path, path_i, dist);
 
-  int *visited = calloc(sizeof(int),size+1);
-  int *path = calloc(sizeof(int),size+1);
-  int cost = distLocations[0][i], path_i=1;
-  path[0] = 0;
-  visited[0] = 1;
-
-  checkShortestDistance(i, visited, path, path_i, cost);
-
-
-
-  free(visited);
-  free(path);
-
+    free(visited);
+    free(path);
 }
 
+// Se imprime los resultados
+  for(int i = 1; i < size+1; i++)
+    printf("%i –>",bestPath[i]);
 
-for(int i = 1; i < size+1; i++)
-  printf("%i –>",best_path[i]);
+  printf("\nLa distancia mas corta es de: %i\n", bestDist);
 
-printf("\nShortest distance found: %i\n", best_cost);
   return 0;
 }
-
-
-
-
-/* #include<stdio.h>
-
-int ary[10][10],completed[10],n,cost=0;
-int least(int c);
-void takeInput();
-void mincost(int city);
-
-void takeInput()
-{
-    int i,j;
-
-    printf("Enter the number of villages: ");
-    scanf("%d",&n);
-
-    printf("\nEnter the Cost Matrix\n");
-
-    for(i=0;i < n;i++)
-    {
-        printf("\nEnter Elements of Row: %d\n",i+1);
-
-        for( j=0;j < n;j++)
-            scanf("%d",&ary[i][j]);
-
-        completed[i]=0;
-    }
-
-    printf("\n\nThe cost list is:");
-
-    for( i=0;i < n;i++)
-    {
-        printf("\n");
-
-        for(j=0;j < n;j++)
-            printf("\t%d",ary[i][j]);
-    }
-}
-
-void mincost(int city)
-{
-    int i,ncity;
-
-    completed[city]=1;
-
-    printf("%d--->",city+1);
-    ncity=least(city);
-
-    if(ncity==999)
-    {
-        ncity=0;
-      //  printf("%d",ncity+1);
-        cost+=ary[city][ncity];
-
-        return;
-    }
-
-    mincost(ncity);
-}
-
-int least(int c)
-{
-    int i,nc=999;
-    int min=999,kmin;
-
-    for(i=0;i < n;i++)
-    {
-        if((ary[c][i]!=0)&&(completed[i]==0))
-            if(ary[c][i]+ary[i][c] < min)
-            {
-                min=ary[i][0]+ary[c][i];
-                kmin=ary[c][i];
-                nc=i;
-            }
-    }
-
-    if(min!=999)
-        cost+=kmin;
-
-    return nc;
-}
-
-int main()
-{
-    takeInput();
-
-    printf("\n\nThe Path is:\n");
-    mincost(3); //passing 0 because starting vertex
-
-    printf("\n\nMinimum cost is %d\n ",cost);
-
-    return 0;
-} */
