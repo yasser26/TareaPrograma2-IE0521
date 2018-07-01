@@ -69,10 +69,10 @@ int main(int argc, char const *argv[]) {
     }
   }
   // Imprime el resultado 
-  printf("Matriz resultante = ( %d , %d )\n", mX,0);
+  printf("Matriz resultante = ( %d , %d )\n", mX,1);
   printf("\t|");
     for(int j = 0; j < mX; j++) {
-        printf("%d ", resultArr[j][1]);
+        printf("%d ", resultArr[j][0]);
     }
     printf("|\n");
 
