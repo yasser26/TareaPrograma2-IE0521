@@ -8,10 +8,8 @@
 
 int main()
 {
-    int n,i = 3, count, c;
+    int n= 500000,i = 3, count, c;
 
-    printf("\nIngrese el número de primos deseados:  ");
-    scanf("%d", &n);
 
     // iteración de números primos
     // siendo i el número que se revisa comenzando en el 3
@@ -33,14 +31,17 @@ int main()
 
         if(c == (int) sqrt(i)+1)  // si no es divisible entre ninguno de los numeros anteriores o igual a la raiz cuadrada del número entonces es primo
         {
-          // printf("%d ", i); //Para imprimir números descomentar esta línea
-            count++;    // incrementa el contador de números primos
+            if (count == n)
+                printf("El número primo número 500000 es %d \t", i);
+            count++;    // incrementa el contador de números primo
+
         }
 
       }
+
     }
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // Finalizo la cuenta de tiempo de ejecución
-    printf("La función tomó %f segundos en ejecutarse \n", time_taken);
+    printf("y la función tomó %f segundos en ejecutarse \n", time_taken);
     return 0;
 }
