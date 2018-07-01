@@ -14,7 +14,7 @@ int main(int argc, char const **argv) {
   MPI_Status status;
   ierr = MPI_Init(&argc, &argv); // Iniciar la aplicacion paralela
   ierr = MPI_Comm_rank(MPI_COMM_WORLD,&rank); // Identifica numero de procesos de la aplicacion
-  ierr = MPI_Comm_size(MPI_COMM_WORLD,&size); //Permote qie cada proceso identifique su direccion dentro dela coleccion
+  ierr = MPI_Comm_size(MPI_COMM_WORLD,&size); //Permite que cada proceso identifique su direccion dentro dela coleccion
 
   srand(time(NULL));
 
@@ -30,7 +30,7 @@ int main(int argc, char const **argv) {
       }else if ( mY != vX) {
           printf("Las matrices ingresadas no se pueden multiplicar, intente de nuevo\n");
         } else {
-          control = false; // Si los datos incresados son correctos, continúa con la ejecución
+          control = false; // Si los datos ingresados son correctos, continúa con la ejecución
         }
     }
 
