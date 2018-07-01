@@ -1,3 +1,6 @@
+/* El siguiente programa realiza la multiplicación de un vector columna con una matriz y tiene como entradas las dimensiones
+de dichos arreglos , y por salida el vector resultante  
+*/
 #include <mpi.h>
 #include <stdbool.h>
 #include <time.h>
@@ -15,7 +18,7 @@ int main(int argc, char const **argv) {
 
   srand(time(NULL));
 
-  /*Master creates matrix and */
+  /*Master pide los datos necesarios y crea las matrices con números aleatorios */
   if(rank == 0){
     while(control){
       printf("Ingrese la dimensión de la matriz. Formato:x,y\n");
@@ -27,21 +30,21 @@ int main(int argc, char const **argv) {
       }else if ( mY != vX) {
           printf("Las matrices ingresadas no se pueden multiplicar, intente de nuevo\n");
         } else {
-          control = false; // if inputs are usable , continue with multiplication
+          control = false; // Si los datos incresados son correctos, continúa con la ejecución
         }
     }
 
-  int matrix[mX][mY]; // Matrix with input sizes
-  int vector[vX][vY]; // Vector with input sizes
+  int matrix[mX][mY]; 
+  int vector[vX][vY]; 
   for( i = 0 ; i < mX ; i++){
     for ( j = 0; j < mY; j++) {
-      matrix[i][j]= rand()%10; // Fill matrix with random numbers from 0-9
+      matrix[i][j]= rand()%10; // Se utilizan números aleatorios del 0-9
       if(j<vY && i<vX){
-        vector[i][j]= rand()%10; // while filling vector array as well
+        vector[i][j]= rand()%10; // y al mismo tiempo se llena el vector
       }
     }
   }
-  // Print Generated Vectors
+  // Imprimir vectores generados
   printf("Matriz = ( %d , %d )\n", mX , mY);
   for( i = 0; i < mX; i++) {
     printf("\t|");
@@ -66,17 +69,18 @@ int main(int argc, char const **argv) {
   int currentProc = 1 , sendSize = size,initial=0 ;
   row = mX/size;
   for (i = 1; i < size; i++)  {
-      MPI_Send(&mY,1,MPI_INT, i , initial , MPI_COMM_WORLD);// send Y max
-      MPI_Send(&row,1,MPI_INT, i , initial , MPI_COMM_WORLD); //send amount of rows
-      MPI_Send(&matrix[initial],mY*row,MPI_INT, i , initial , MPI_COMM_WORLD);// send each line with mY values
-      MPI_Send(&vector,mY,MPI_INT, i , initial , MPI_COMM_WORLD); // vector
+      MPI_Send(&mY,1,MPI_INT, i , initial , MPI_COMM_WORLD);// Se envía el valor de las columnas
+      MPI_Send(&row,1,MPI_INT, i , initial , MPI_COMM_WORLD); //y el número de filas a revisar por proceso
+      MPI_Send(&matrix[initial],mY*row,MPI_INT, i , initial , MPI_COMM_WORLD);// envío las  filas a multiplicar 
+      MPI_Send(&vector,mY,MPI_INT, i , initial , MPI_COMM_WORLD); // y el vector que multiplica
       //printf("Initial:%d, CP %d , row %d\n",initial,currentProc , row);
-      initial += row ;
+      initial += row ; // cada procesador recibe la cantidad de filas en row 
       sendSize = sendSize - row;
       currentProc += 1;
       row = sendSize;
     }
     int row1 ;
+    // En esta función se reciben los datos y se guarda en la matriz de resultado 
     for (i = 1; i < size; i++) {
         ierr = MPI_Recv(&row1,1,MPI_INT,MPI_ANY_SOURCE, MPI_ANY_TAG , MPI_COMM_WORLD, &status);//
         int resultado[row1];
@@ -110,7 +114,7 @@ int main(int argc, char const **argv) {
   MPI_Recv(&recMatrix,mY*row,MPI_INT,0, MPI_ANY_TAG , MPI_COMM_WORLD , &status);//
   MPI_Recv(&vector,mY,MPI_INT,0, MPI_ANY_TAG , MPI_COMM_WORLD, &status);
 
-
+  // con los datos ingresados se realiza la multiplicación matricial
   for ( j = 0; j < row; j++) {
     resultado[j] = 0;
     for ( i = 0; i < mY; i++) {
