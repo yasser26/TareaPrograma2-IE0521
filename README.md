@@ -21,13 +21,13 @@ Pasos para la ejecución de los programas
 
 Secuencial
 
-1. Se compila el programa P3S.c con el siguente comando : "gcc P1S.c -o parte1secuencial -lm"
+1. Se compila el programa P3S.c con el siguente comando : "gcc P1S.c -o parte1secuencial "
 
 2. Se ejecuta el programa con el siguiente comando en terminal : "./parte1secuencial"
 
 Paralelo
 
-1. Se compila el programa P1P.c con el siguiente comando : "mpicc P1P.c -o parte1paralelo -lm"
+1. Se compila el programa P1P.c con el siguiente comando : "mpicc P1P.c -o parte1paralelo "
 
 2. Se ejecuta el programa con el siguiente comando en terminal : "mpiexec -n 3 ./parte1paralelo"
 
