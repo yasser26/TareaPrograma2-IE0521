@@ -1,3 +1,5 @@
+/*Realiza una multiplicación de una matriz y un vecor columna en forma secuencial , recibe las dimensiones 
+de los arreglos y tiene por salida el resultado de la multiplicación  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -20,21 +22,21 @@ int main(int argc, char const *argv[]) {
     }else if ( mY != vX) {
         printf("Las matrices ingresadas no se pueden multiplicar, intente de nuevo\n");
       } else {
-        control = false; // if inputs are usable , continue with multiplication
+        control = false; // Si los datos ingresados son correctos, continúa la ejecución
       }
   }
-  int matrix[mX][mY]; // Matrix with input sizes
-  int vector[vX][vY]; // Vector with input sizes
+  int matrix[mX][mY]; 
+  int vector[vX][vY]; 
   for( int i = 0 ; i < mX ; i++){
     for (int j = 0; j < mY; j++) {
-      matrix[i][j]= rand()%10; // Fill matrix with random numbers from 0-9
+      matrix[i][j]= rand()%10; // Llena la matriz con numeros de 0-9
       if(j<vY && i<vX){
-        vector[i][j]= rand()%10; // while filling vector array as well
+        vector[i][j]= rand()%10; // y el vector también 
       }
     }
   }
 
-  //Print generated vectors
+  //PImprime los vectores generados
 
   printf("Matriz = ( %d , %d )\n", mX , mY);
   for(int i = 0; i < mX; i++) {
@@ -57,6 +59,7 @@ int main(int argc, char const *argv[]) {
   for(int j = 0; j < mX; j++) {
       resultArr[j][0] = 0;
   }
+  // Multiplica los vectores
   int resultado;
   for (int i = 0; i < mX; i++) {
     for (int j = 0; j < mY; j++) {
@@ -65,7 +68,7 @@ int main(int argc, char const *argv[]) {
       printf("resArray pos %d , %d = %d \n",i,0, resultArr[i][0] );
     }
   }
-
+  // Imprime el resultado 
   printf("Matriz resultante = ( %d , %d )\n", mX,0);
   printf("\t|");
     for(int j = 0; j < mX; j++) {
