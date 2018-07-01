@@ -29,7 +29,7 @@ Paralelo
 
 1. Se compila el programa P1P.c con el siguiente comando : "mpicc P1P.c -o parte1paralelo -lm"
 
-2. Se ejecuta el programa con el siguiente comando en terminal : "mpiexec -n 8 ./parte1paralelo"
+2. Se ejecuta el programa con el siguiente comando en terminal : "mpiexec -n 3 ./parte1paralelo"
 
 
 # Problema 2:
